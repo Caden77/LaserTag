@@ -96,12 +96,15 @@ void queue_push(queue_t *q, queue_data_t value) {
         }
         else {
             //add to the queue
-            if (q->indexOut < q->size)
             q->data[q->indexOut] = value;
-            (q->elementCount)++
+            (q->elementCount)++;
 
             //increment our index pointer
-            if()
+            (q->indexOut)++;
+            if (q->indexOut >= q->size) {
+                //invalid index, rotate
+                q->indexOut = 0;
+            }
 
             //set flag
             q->underflowFlag = FALSE;
