@@ -122,7 +122,21 @@ queue_data_t queue_pop(queue_t *q) {
             q->underflowFlag = TRUE;
             printf("%s\n", QUEUE_RETURN_ERROR_VALUE);
         } else {
+            //set flag
             q->overflowFlag = FALSE;
+
+            //get data
+            queue_data_t dataReturned = q->data[q->indexIn];
+
+            //increment begin index (remove)
+            (q->indexIn)++;
+            if (q->indexIn >= 1->size) {
+                //invalid index, rotate
+                q->indexIn = 0;
+            }
+
+            //return data
+            return dataReturned;
         }
     }
 }
