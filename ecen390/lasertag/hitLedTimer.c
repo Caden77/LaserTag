@@ -11,7 +11,7 @@
 #include "utils.h"
 
 // Uncomment for debug prints
-#define DEBUG
+//#define DEBUG
  
 #if defined(DEBUG)
 #include <stdio.h>
@@ -178,7 +178,7 @@ void hitLedTimer_runTest() {
         intervalTimer_stop(INTERVAL_TIMER_TIMER_1);
         DPRINTF("%f\n", intervalTimer_getTotalDurationInSeconds(INTERVAL_TIMER_TIMER_1));
 
-        utils_msDelay(50);
+        utils_msDelay(500);
         
         if (hitLedTimer_get_btn3_isPressed()) {
             break;

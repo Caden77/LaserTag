@@ -47,7 +47,6 @@ bool queue_full(queue_t *q) {
         return q->size == q->elementCount;
     }
 }
-}
 
 // Returns true if the queue is empty.
 bool queue_empty(queue_t *q) {
