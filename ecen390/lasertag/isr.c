@@ -19,6 +19,7 @@ void isr_init() {
 }
 
 // This function is invoked by the timer interrupt at 100 kHz. (our tick function)
+//  tick all initialized functions.
 void isr_function() {
     lockoutTimer_tick();
     transmitter_tick();

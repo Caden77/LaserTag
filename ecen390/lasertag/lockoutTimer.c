@@ -4,7 +4,7 @@
 #include "isr.h"
 
 // Uncomment for debug prints
-//#define DEBUG
+#define DEBUG
  
 #if defined(DEBUG)
 #include <stdio.h>
@@ -19,9 +19,9 @@
 // The lockoutTimer is active for 1/2 second once it is started.
 // It is used to lock-out the detector once a hit has been detected.
 // This ensures that only one hit is detected per 1/2-second interval.
-
 #define LOCKOUT_BOUND_TICKS 50000 // (1/100,000) * 50,000 = 0.5sec
 
+//debug print statements
 #define LOCKOUT_STATE_WAIT_MESSAGE "In state waiting."
 #define LOCKOUT_STATE_RUNNING_MESSAGE "In state running."
 #define LOCKOUT_STATE_ERROR_MESSAGE "In default error state."
@@ -35,9 +35,9 @@ enum lockoutTimer_st_t {
 volatile static enum lockoutTimer_st_t currentState;
 volatile static enum lockoutTimer_st_t prevState;
 
-volatile static uint32_t tickCount;
-volatile static uint8_t debugFirstCall;
-volatile static uint8_t isStarting;
+volatile static uint32_t tickCount;         //tracker for tick count
+volatile static uint8_t debugFirstCall;     //debug
+volatile static uint8_t isStarting;         //flag for starting
 
 
 //Prints the state of the state machine, every time it changes
@@ -51,13 +51,13 @@ void debugLockoutTimer() {
         //Print out unique message for each state
         switch(currentState) {
             case wait_st:
-                DPRINTF("%s\n", LOCKOUT_STATE_WAIT_MESSAGE);
+                DPRINTF("%s\n", LOCKOUT_STATE_WAIT_MESSAGE);    //print message to track if we entered wait state
                 break;
             case running_st:
-                DPRINTF("%s\n", LOCKOUT_STATE_RUNNING_MESSAGE);
+                DPRINTF("%s\n", LOCKOUT_STATE_RUNNING_MESSAGE); //print message to track if we entered running state
                 break;
             default:
-                DPRINTF("%s\n", LOCKOUT_STATE_ERROR_MESSAGE);
+                DPRINTF("%s\n", LOCKOUT_STATE_ERROR_MESSAGE);   //print message to track if we entered error state
                 break;
         }
     }
@@ -65,10 +65,10 @@ void debugLockoutTimer() {
 
 // Perform any necessary inits for the lockout timer.
 void lockoutTimer_init() {
-    tickCount = 0;
-    debugFirstCall = 1;
-    isStarting = 0;
-    currentState = wait_st;
+    tickCount = 0;          //init tick counter
+    debugFirstCall = 1;     //init debug first call
+    isStarting = 0;         //init starting flag
+    currentState = wait_st; //init current state to wait state
 }
 
 // Standard tick function.
@@ -78,7 +78,7 @@ void lockoutTimer_tick() {
     switch(currentState) {
             case wait_st:
                 if (isStarting) {
-                    currentState = running_st;
+                    currentState = running_st; //enter running_st
                     tickCount = 0; //reset tickcount
                 }
                 //else stay at wait state
@@ -86,14 +86,14 @@ void lockoutTimer_tick() {
                 break;
             case running_st:
                 if (tickCount >= LOCKOUT_BOUND_TICKS) {
-                    currentState = wait_st;
+                    currentState = wait_st; //enter wait_st
                     tickCount = 0; //reset tickout going to wait_st
                     isStarting = 0;
                 }
                 //else stay at running state
                 
                 break;
-            default:
+            default: // error if entered
                 break;
     }
     
@@ -104,7 +104,7 @@ void lockoutTimer_tick() {
             case running_st: //increment tickCount
                 tickCount += 1;
                 break;
-            default:
+            default: // error if entered
                 break;
         }
 }
