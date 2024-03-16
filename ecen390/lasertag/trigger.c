@@ -35,7 +35,7 @@
 #define GUN_TRIGGER_PRESSED (true)
 
 //Define the number of shots the trigger can fire initially
-#define TRIGGER_START_SHOT_COUNT 10
+#define TRIGGER_START_SHOT_COUNT 100
 
 //For testing, indicates the delay needed for detecting a release on button 3
 #define BOUNCE_DELAY 5

@@ -4,7 +4,7 @@
 #include "isr.h"
 
 // Uncomment for debug prints
-#define DEBUG
+//#define DEBUG
  
 #if defined(DEBUG)
 #include <stdio.h>
@@ -22,9 +22,9 @@
 #define LOCKOUT_BOUND_TICKS 50000 // (1/100,000) * 50,000 = 0.5sec
 
 //debug print statements
-#define LOCKOUT_STATE_WAIT_MESSAGE "In state waiting."
-#define LOCKOUT_STATE_RUNNING_MESSAGE "In state running."
-#define LOCKOUT_STATE_ERROR_MESSAGE "In default error state."
+#define LOCKOUT_STATE_WAIT_MESSAGE "Lockout: In state waiting."
+#define LOCKOUT_STATE_RUNNING_MESSAGE "Lockout: In state running."
+#define LOCKOUT_STATE_ERROR_MESSAGE "Lockout: In default error state."
 
 // States for our lockoutTimer State Machine.
 enum lockoutTimer_st_t {
